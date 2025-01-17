@@ -61,7 +61,7 @@ const CartPage = () => {
                 />
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold">{item.name}</h3>
-                  <p className="text-gray-600">${item.price}</p>
+                  <p className="text-gray-600 font-bold">${item.price}</p>
                   <div className="mt-2 flex items-center space-x-2">
                     <button className="px-2 py-1 border rounded" onClick={() => handle_each_item_delete(item)}>-</button>
                     <span>{item.quantity}</span>
