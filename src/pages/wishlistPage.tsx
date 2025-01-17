@@ -1,29 +1,49 @@
 import React from "react";
 import { Trash2, ShoppingCart } from "lucide-react";
 import { Product } from "../types";
-
-const DUMMY_WISHLIST: Product[] = [
-  {
-    id: 1,
-    name: "Classic Logo T-Shirt",
-    description: "Comfortable cotton t-shirt with embroidered company logo",
-    category: "Apparel",
-    brand: "Next Level",
-    price: 24.99,
-    rating: 4.5,
-    image:
-      "https://media.istockphoto.com/id/1450349466/photo/man-wearing-green-t-shirt-with-universal-recycling-symbol-printed-on-chest.jpg?s=2048x2048&w=is&k=20&c=lhRlOJGseVE_ywbUDn4e2QdxGYOPYlVdBEEwTYpkacQ=",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { remove_one_from_Wishlist } from "@/redux/wishlistSlice";
+import { remove_all_from_wishlist } from "@/redux/wishlistSlice";
+import { addtoCart } from "@/redux/cartSlice";
+// const DUMMY_WISHLIST: Product[] = [
+//   {
+//     id: 1,
+//     name: "Classic Logo T-Shirt",
+//     description: "Comfortable cotton t-shirt with embroidered company logo",
+//     category: "Apparel",
+//     brand: "Next Level",
+//     price: 24.99,
+//     rating: 4.5,
+//     image:
+//       "https://media.istockphoto.com/id/1450349466/photo/man-wearing-green-t-shirt-with-universal-recycling-symbol-printed-on-chest.jpg?s=2048x2048&w=is&k=20&c=lhRlOJGseVE_ywbUDn4e2QdxGYOPYlVdBEEwTYpkacQ=",
+//   },
+// ];
 
 const WishlistPage = () => {
-  return (
+  const [addedToCart, setAddedToCart] = React.useState(false);
+  const DUMMY_WISHLIST = useSelector((state: any) => state.wishlist.wishlist);
+  const dispatch = useDispatch();
+  const handle_one_remove = (item:Product) => {
+    dispatch(remove_one_from_Wishlist(item));
+  };
+  const handle_remove_all = () => {
+    dispatch(remove_all_from_wishlist(null));
+  }
+  const handle_add_to_cart = (item:Product) => {
+    dispatch(addtoCart(item));
+    setAddedToCart(true);
+  }
+  if(DUMMY_WISHLIST.length === 0){return <div className="text-center py-12">
+    <p className="text-gray-500">Your wishlist is empty</p> </div>} 
+    return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">My Wishlist</h1>
-
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">My Wishlist</h1>
+        <button className="bg-blue-600 text-white py-2 px-3 rounded-xl" onClick={() => {handle_remove_all()}}>Remove all</button>
+      </div>
       {DUMMY_WISHLIST.length > 0 ? (
         <div className="grid grid-cols-1 gap-6">
-          {DUMMY_WISHLIST.map((item) => (
+          {DUMMY_WISHLIST.map((item:Product) => (
             <div
               key={item.id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -48,16 +68,17 @@ const WishlistPage = () => {
                       <p className="text-gray-600 mt-2">{item.description}</p>
                     </div>
                     <div className="flex space-x-2">
-                      <button className="p-2 text-gray-400 hover:text-red-500">
+                      <button className="p-2 text-gray-400 hover:text-red-500" onClick={() => {handle_one_remove(item)}}>
                         <Trash2 className="h-5 w-5" />
                       </button>
                     </div>
                   </div>
-                  <div className="mt-4">
-                    <button className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700">
+                  <div className="mt-4">{addedToCart ? <p className="text-green-500">Added to cart</p> :
+                    <button className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                    onClick={() => {handle_add_to_cart(item)}}>
                       <ShoppingCart className="h-4 w-4 mr-2" />
                       Move to Cart
-                    </button>
+                    </button>}
                   </div>
                 </div>
               </div>

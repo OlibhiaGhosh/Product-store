@@ -6,6 +6,7 @@ import { addtoCart } from "../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setProducts } from "../redux/productSlice";
 import { useMemo } from 'react';
+import { addtoWishlist } from '@/redux/wishlistSlice';
 
 const ProductsPage = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const ProductsPage = () => {
   };
 
   const handleAddToWishlist = (product: Product) => {
-    // Implement wishlist logic
+    dispatch(addtoWishlist(product));
     console.log('Added to wishlist:', product);
   };
 
