@@ -20,7 +20,7 @@ import { addtoCart } from "@/redux/cartSlice";
 // ];
 
 const WishlistPage = () => {
-  const [addedToCart, setAddedToCart] = React.useState(false);
+  const [addedToCart, setAddedToCart] = React.useState({"id":0, "state":false});
   const DUMMY_WISHLIST = useSelector((state: any) => state.wishlist.wishlist);
   const dispatch = useDispatch();
   const handle_one_remove = (item:Product) => {
@@ -31,7 +31,7 @@ const WishlistPage = () => {
   }
   const handle_add_to_cart = (item:Product) => {
     dispatch(addtoCart(item));
-    setAddedToCart(true);
+    setAddedToCart({"id":item.id, "state":true});
   }
   if(DUMMY_WISHLIST.length === 0){return <div className="text-center py-12">
     <p className="text-gray-500">Your wishlist is empty</p> </div>} 
@@ -73,7 +73,7 @@ const WishlistPage = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="mt-4">{addedToCart ? <p className="text-green-500">Added to cart</p> :
+                  <div className="mt-4">{(addedToCart.id == item.id && addedToCart.state) ? <p className="text-green-500">Added to cart</p> :
                     <button className="flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
                     onClick={() => {handle_add_to_cart(item)}}>
                       <ShoppingCart className="h-4 w-4 mr-2" />
