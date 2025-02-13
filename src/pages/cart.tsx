@@ -1,15 +1,3 @@
-// import React from "react";
-// import { Suspense } from "react";
-// const Cart = React.lazy(() => import("../components/cart_comp"));
-// function CartPage() {
-//   return (
-//     <Suspense fallback={<div>Loading...</div>}>
-//       <Cart />
-//     </Suspense>
-//   );
-// }
-
-// export default CartPage;
 import React from "react";
 import { Link } from "react-router-dom";
 import { Trash2 } from "lucide-react";
@@ -20,11 +8,13 @@ import {
   remove_one_from_Cart,
   remove_whole_from_Cart,
 } from "../redux/cartSlice";
+import { handle_is_added_to_cart, handle_is_removed_from_cart } from "../redux/productSlice";
 
 const CartPage = () => {
   const dispatch = useDispatch();
+  // const product = useSelector((state: any) => state.product.products);
   const cart_items = useSelector((state: any) => state.cart.cart_products);
-  const no_of_cart_items = useSelector(
+  const total_no_of_cart_items = useSelector(
     (state: any) => state.cart.totalQuantity
   );
   const total_price = useSelector((state: any) => state.cart.totalPrice);
@@ -39,8 +29,8 @@ const CartPage = () => {
 
   const handle_whole_item_delete = (item: any) => {
     dispatch(remove_whole_from_Cart(item));
+    dispatch(handle_is_removed_from_cart(item));
   };
-  // const total = cart_items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -65,7 +55,8 @@ const CartPage = () => {
                   <div className="mt-2 flex items-center space-x-2">
                     <button className="px-2 py-1 border rounded" onClick={() => handle_each_item_delete(item)}>-</button>
                     <span>{item.quantity}</span>
-                    <button className="px-2 py-1 border rounded" onClick={() => handle_item_add(item)}>+</button>
+                    <button className="px-2 py-1 border rounded" onClick={() => {handle_item_add(item)
+                    }}>+</button>
                   </div>
                 </div>
                 <button className="text-red-500 hover:text-red-700" onClick={() => handle_whole_item_delete(item)}>
@@ -81,7 +72,7 @@ const CartPage = () => {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span>Total Quantity</span>
-                  <span>{no_of_cart_items}</span>
+                  <span>{total_no_of_cart_items}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Subtotal</span>

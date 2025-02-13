@@ -24,8 +24,8 @@ function Shipping_comp() {
     cvv: "",
   });
   const onSubmit = () => {
+    alert("Are you sure you want to place the order?");
     dispatch(addDetails(details));
-    alert("Order Placed Successfully");
     dispatch(remove_all(null));
     isorderPlaced(true);
     console.log(user_details);

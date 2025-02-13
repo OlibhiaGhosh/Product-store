@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 function Navbar() {
   const no_of_items_in_cart = useSelector((state) => state.cart.totalQuantity);
-
   return (
     <div className="w-full overflow-x-clip sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b flex h-16 items-center justify-between p-0 sm:p-9">
       <Link

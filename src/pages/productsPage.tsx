@@ -4,7 +4,7 @@ import { Product } from '../types';
 import productlist from '@/mockdata/product_list';
 import { addtoCart } from "../redux/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../redux/productSlice";
+import { setProducts, handle_is_added_to_cart } from "../redux/productSlice";
 import { useMemo } from 'react';
 import { addtoWishlist } from '@/redux/wishlistSlice';
 
@@ -16,6 +16,7 @@ const ProductsPage = () => {
   const all_products = useSelector((state:any) => state.product.products)
   const handleAddToCart = (product: Product) => {
     dispatch(addtoCart(product));
+    dispatch(handle_is_added_to_cart(product));
     console.log('Added to cart:', product);
   };
 

@@ -9,11 +9,17 @@ export interface Product {
     image: string;
   }
   
-  export interface CartItem extends Product {
-    totalPrice: number;
-    quantity: number;
+  export interface Product_extended{
+    products: Product[];
+    items_in_cart: number[];
   }
-  
+  export interface CartItem extends Product {
+    subtotal: number;
+    quantity: number;
+    
+  }
+  export interface WishlistItem extends Product { 
+  }
   export interface User {
     email: string;
     name: string;

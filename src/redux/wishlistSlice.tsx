@@ -1,9 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Product } from "@/types";
-import { stat } from "fs";
-
+import { CartItem, WishlistItem } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
 const initialState = {
-  wishlist: [] as Product[],
+  wishlist: [] as WishlistItem[],
 };
 
 const wishlistSlice = createSlice({
@@ -11,15 +10,16 @@ const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addtoWishlist(state, action) {
-      const selected_product:Product = action.payload;
+      const selected_product:WishlistItem = action.payload;
 
-      const find_index = state.wishlist.find((item) => {
+      const find_index:any = state.wishlist.find((item) => {
         return item.id === selected_product.id;
       });
 
       if (find_index) {
         alert("Already added to wishlist")
-      } else {
+      }
+      else {
         state.wishlist.push({
           id: selected_product.id,
           name: selected_product.name,
@@ -39,8 +39,27 @@ const wishlistSlice = createSlice({
       state.wishlist = state.wishlist.filter(item => item.id !== selected_product.id);
     },
     remove_all_from_wishlist(state, action) {
-        state.wishlist = [];
-    }
+      state.wishlist = [];
+    },
+    // is_added_to_cart(state, action){
+    //   const selected_product:any= action.payload;
+    //   selected_product.isAddedtoCart = true;
+    //   const find_index = state.wishlist.find((item) => {
+    //     return item.id === selected_product.id;
+    //   });
+    //   if(find_index){
+    //     find_index.isAddedtoCart = true
+    //   }
+    // },
+    // is_remove_from_cart(state, action){
+    //   const selected_product:any = action.payload;
+    //   const find_index = state.wishlist.find((item) => {
+    //     return item.id === selected_product.id;
+    //   });
+    //   if(find_index){
+    //     find_index.isAddedtoCart = false
+    //   }
+    // }
   },
 });
 
