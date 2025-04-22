@@ -1,20 +1,11 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { OrderDetails } from "@/types";
-interface Detail {
-  id: string;
-  fullname: string;
-  phoneno: string;
-  email: string;
-  address: string;
-  pincode: string;
-  state: string;
-  cardno: string;
-  cardname: string;
-  expiry: string;
-  cvv: string;
+
+interface ShippingState {
+  details: OrderDetails[];
 }
 
-const initialState: { details: OrderDetails[] } = {
+const initialState: ShippingState = {
   details: [],
 };
 
@@ -22,16 +13,13 @@ const shippingSlice = createSlice({
   name: "shipping_details",
   initialState,
   reducers: {
-    addDetails(state, action) {
+    addDetails: (state, action: PayloadAction<OrderDetails>) => {
       const details = action.payload;
+      const exists = state.details.some((user) => user.id === details.id);
 
-      const find_user = state.details.find((user) => {
-        return user.id === details.id;
-      });
-
-      if (!find_user) {
+      if (!exists) {
         state.details.push({
-          id: nanoid(1),
+          id: details.id || Date.now().toString(),
           fullname: details.fullname,
           phoneno: details.phoneno,
           email: details.email,
@@ -43,6 +31,8 @@ const shippingSlice = createSlice({
           expiry: details.expiry,
           cvv: details.cvv,
         });
+      } else {
+        alert("User already exists");
       }
     },
   },

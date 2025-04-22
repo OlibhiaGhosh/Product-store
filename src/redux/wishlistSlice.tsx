@@ -1,67 +1,47 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { CartItem, WishlistItem } from "@/types";
-import { useDispatch, useSelector } from "react-redux";
-const initialState = {
-  wishlist: [] as WishlistItem[],
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { WishlistItem } from "@/types";
+
+interface WishlistState {
+  wishlist: WishlistItem[];
+}
+
+const initialState: WishlistState = {
+  wishlist: [],
 };
 
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
   reducers: {
-    addtoWishlist(state, action) {
-      const selected_product:WishlistItem = action.payload;
-
-      const find_index:any = state.wishlist.find((item) => {
-        return item.id === selected_product.id;
-      });
-
-      if (find_index) {
-        alert("Already added to wishlist")
-      }
-      else {
-        state.wishlist.push({
-          id: selected_product.id,
-          name: selected_product.name,
-          description: selected_product.description,
-          brand:selected_product.brand,
-          rating:selected_product.rating,
-          category:selected_product.category,
-          price: selected_product.price,
-          image: selected_product.image,
-        });
-        alert("Added to wishlist");
-      }
-    },
-    remove_one_from_Wishlist(state, action) {
+    addtoWishlist: (state, action: PayloadAction<WishlistItem>) => {
       const selected_product = action.payload;
+      const exists = state.wishlist.some(
+        (item) => item.id === selected_product.id
+      );
 
-      state.wishlist = state.wishlist.filter(item => item.id !== selected_product.id);
+      if (exists) {
+        alert("Already added to wishlist");
+        return;
+      }
+
+      state.wishlist.push(selected_product);
+      alert("Added to wishlist");
     },
-    remove_all_from_wishlist(state, action) {
+    remove_one_from_Wishlist: (state, action: PayloadAction<WishlistItem>) => {
+      state.wishlist = state.wishlist.filter(
+        (item) => item.id !== action.payload.id
+      );
+    },
+    remove_all_from_wishlist: (state) => {
       state.wishlist = [];
+      alert("Removed all items from wishlist");
     },
-    // is_added_to_cart(state, action){
-    //   const selected_product:any= action.payload;
-    //   selected_product.isAddedtoCart = true;
-    //   const find_index = state.wishlist.find((item) => {
-    //     return item.id === selected_product.id;
-    //   });
-    //   if(find_index){
-    //     find_index.isAddedtoCart = true
-    //   }
-    // },
-    // is_remove_from_cart(state, action){
-    //   const selected_product:any = action.payload;
-    //   const find_index = state.wishlist.find((item) => {
-    //     return item.id === selected_product.id;
-    //   });
-    //   if(find_index){
-    //     find_index.isAddedtoCart = false
-    //   }
-    // }
   },
 });
 
-export const { addtoWishlist, remove_one_from_Wishlist, remove_all_from_wishlist } = wishlistSlice.actions;
+export const {
+  addtoWishlist,
+  remove_one_from_Wishlist,
+  remove_all_from_wishlist,
+} = wishlistSlice.actions;
 export default wishlistSlice.reducer;

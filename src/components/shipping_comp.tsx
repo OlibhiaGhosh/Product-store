@@ -6,16 +6,20 @@ import { Link } from "react-router-dom";
 import { remove_all } from "../redux/cartSlice";
 
 function Shipping_comp() {
-  const user_details = useSelector((state:any) => state.shipping_details.details);
+  const user_details = useSelector(
+    (state: any) => state.shipping_details.details
+  );
   const dispatch = useDispatch();
-  const no_of_cart_items = useSelector((state:any) => state.cart.totalQuantity);
-  const total_price = useSelector((state:any) => state.cart.totalPrice);
+  const no_of_cart_items = useSelector(
+    (state: any) => state.cart.totalQuantity
+  );
+  const total_price = useSelector((state: any) => state.cart.totalPrice);
   const [orderplaced, isorderPlaced] = useState(false);
   const [details, setDetails] = useState({
     fullname: "",
     phoneno: "",
     email: "",
-    adress: "",
+    address: "",
     pincode: "",
     state: "",
     cardno: "",
@@ -24,18 +28,28 @@ function Shipping_comp() {
     cvv: "",
   });
   const onSubmit = () => {
-    alert("Are you sure you want to place the order?");
-    dispatch(addDetails(details));
-    dispatch(remove_all(null));
-    isorderPlaced(true);
-    console.log(user_details);
+    if (window.confirm("Are you sure you want to place the order?")) {
+      const orderDetails = {
+        ...details,
+        id: Date.now().toString(),
+      };
+      dispatch(addDetails(orderDetails));
+      dispatch(remove_all(null));
+      isorderPlaced(true);
+    }
   };
   return (
     <>
       {orderplaced ? (
         <div className="flex justify-center items-center flex-col">
-        <div className="flex justify-center items-center mt-60 p-8 font-bold text-4xl text-red-700 text-center">Order Placed Successfully<br /> Thanks :)</div>
-        <div className="rounded-md bg-blue-600 text-white font-bold p-2 w-48 flex justify-center items-center"> <Link to="/"> Back to Home </Link> </div>
+          <div className="flex justify-center items-center mt-60 p-8 font-bold text-4xl text-red-700 text-center">
+            Order Placed Successfully
+            <br /> Thanks :)
+          </div>
+          <div className="rounded-md bg-blue-600 text-white font-bold p-2 w-48 flex justify-center items-center">
+            {" "}
+            <Link to="/"> Back to Home </Link>{" "}
+          </div>
         </div>
       ) : (
         <div className="bg-white shadow-lg rounded-lg flex p-8 gap-8">
@@ -47,6 +61,7 @@ function Shipping_comp() {
               className="space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
+                onSubmit();
               }}
             >
               <div className="grid grid-cols-2 gap-4">
@@ -121,9 +136,9 @@ function Shipping_comp() {
                   className="w-full border rounded-md p-2"
                   placeholder="123 Elm Street"
                   rows={4}
-                  value={details.adress}
+                  value={details.address}
                   onChange={(e) =>
-                    setDetails({ ...details, adress: e.target.value })
+                    setDetails({ ...details, address: e.target.value })
                   }
                 ></textarea>
               </div>
@@ -257,7 +272,7 @@ function Shipping_comp() {
                     details.fullname != "" &&
                     details.phoneno != "" &&
                     details.email != "" &&
-                    details.adress != "" &&
+                    details.address != "" &&
                     details.state != "" &&
                     details.pincode != "" &&
                     details.cardname != "" &&
