@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 function Navbar() {
   const no_of_items_in_cart = useSelector((state) => state.cart.totalQuantity);
   return (
-    <div className="w-full overflow-x-clip sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b flex h-16 items-center justify-between p-0 sm:p-9">
+    <div className="w-full overflow-x-clip sticky top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b flex h-16 items-center justify-between p-4 sm:p-9">
       <Link
         to="/"
         className="font-bold transform transition-transform hover:scale-125"
@@ -53,7 +53,7 @@ function Navbar() {
           ) : null}
         </div>
         <Link to="/signup">
-          <div className="px-3 py-2 bg-blue-700 text-white font-bold rounded-md transform transition-transform hover:scale-105">
+          <div className="px-3 py-2 max-sm:px-2 max-sm:py-1 bg-blue-700 text-white font-bold rounded-md transform transition-transform hover:scale-105">
             SignUp
           </div>
         </Link>
