@@ -2,6 +2,7 @@ import React from "react";
 import { FaCartPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Heart } from "lucide-react";
 function Navbar() {
   const no_of_items_in_cart = useSelector((state) => state.cart.totalQuantity);
   return (
@@ -38,7 +39,10 @@ function Navbar() {
           Support
         </Link>
       </div>
-      <div className="flex items-center gap-10">
+      <div className="flex items-center gap-10 max-sm:gap-5">
+        <Link to="/wishlist">
+          <Heart className="h-4 w-4" />
+        </Link>
         <div className="relative">
           <Link to="/cart">
             <FaCartPlus
@@ -52,6 +56,7 @@ function Navbar() {
             </div>
           ) : null}
         </div>
+
         <Link to="/signup">
           <div className="px-3 py-2 max-sm:px-2 max-sm:py-1 bg-blue-700 text-white font-bold rounded-md transform transition-transform hover:scale-105">
             SignUp
