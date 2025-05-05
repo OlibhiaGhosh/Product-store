@@ -37,7 +37,7 @@ const cartSlice = createSlice({
       state.totalPrice += selected_product.price;
       state.totalQuantity += 1;
       toast("Added to cart", {
-        duration: 4000,
+        duration: 1000,
         position: "top-center",
         removeDelay: 1000,
       });

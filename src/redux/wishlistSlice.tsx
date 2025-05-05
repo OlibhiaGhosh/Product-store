@@ -22,7 +22,7 @@ const wishlistSlice = createSlice({
 
       if (exists) {
         toast("Already in wishlist", {
-          duration: 4000,
+          duration: 1000,
           position: "top-center",
           removeDelay: 1000,
         });
@@ -31,7 +31,7 @@ const wishlistSlice = createSlice({
 
       state.wishlist.push(selected_product);
       toast("Added to wishlist", {
-        duration: 4000,
+        duration: 1000,
         position: "top-center",
         removeDelay: 1000,
       });
