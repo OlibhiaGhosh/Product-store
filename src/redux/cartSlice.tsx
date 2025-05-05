@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { CartItem } from "@/types";
+import toast from "react-hot-toast";
 const initialState = {
   cart_products: [] as CartItem[],
   totalPrice: 0,
@@ -35,6 +36,11 @@ const cartSlice = createSlice({
       }
       state.totalPrice += selected_product.price;
       state.totalQuantity += 1;
+      toast("Added to cart", {
+        duration: 4000,
+        position: "top-center",
+        removeDelay: 1000,
+      });
     },
 
     remove_one_from_Cart(state, action) {
@@ -62,8 +68,8 @@ const cartSlice = createSlice({
       state.totalPrice -= find_index.subtotal;
       state.totalQuantity -= find_index.quantity;
     },
-    remove_all(state, action) {
-      state.cart_products.pop();
+    remove_all(state) {
+      state.cart_products = [];
       state.totalPrice = 0;
       state.totalQuantity = 0;
     },

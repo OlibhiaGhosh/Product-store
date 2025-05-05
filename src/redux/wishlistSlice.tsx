@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { WishlistItem } from "@/types";
+import toast from "react-hot-toast";
 
 interface WishlistState {
   wishlist: WishlistItem[];
@@ -20,12 +21,20 @@ const wishlistSlice = createSlice({
       );
 
       if (exists) {
-        alert("Already added to wishlist");
+        toast("Already in wishlist", {
+          duration: 4000,
+          position: "top-center",
+          removeDelay: 1000,
+        });
         return;
       }
 
       state.wishlist.push(selected_product);
-      alert("Added to wishlist");
+      toast("Added to wishlist", {
+        duration: 4000,
+        position: "top-center",
+        removeDelay: 1000,
+      });
     },
     remove_one_from_Wishlist: (state, action: PayloadAction<WishlistItem>) => {
       state.wishlist = state.wishlist.filter(

@@ -34,6 +34,7 @@ const shippingSlice = createSlice({
       } else {
         alert("User already exists");
       }
+      // console.log("In shipping slice: ", state.details[0]);
     },
   },
 });

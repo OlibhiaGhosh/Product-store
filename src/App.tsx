@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/navbar";
 import CartPage from "./pages/cart";
-import Shipping from "./pages/shipping";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ProductDetailsPage from "./pages/productDetailsPage";

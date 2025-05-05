@@ -1,4 +1,3 @@
-import React from "react";
 import { Trash2, ShoppingCart } from "lucide-react";
 import { Product, WishlistItem } from "../types";
 import { useDispatch, useSelector } from "react-redux";
@@ -107,7 +106,7 @@ const WishlistPage = () => {
                     <div className="flex justify-between mx-2 items-center">
                       <p className="text-green-500">Added to cart</p>
                       <button
-                        className="px-4 py-2 bg-blue-600 text-white font-bold w-max rounded-md"
+                        className="px-4 py-2 bg-red-700 text-white font-bold w-max rounded-md"
                         onClick={() => {
                           handleremovefromCart(item);
                         }}
