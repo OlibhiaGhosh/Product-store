@@ -40,7 +40,7 @@ function Navbar() {
         </Link>
       </div>
       <div className="flex items-center gap-10 max-sm:gap-5">
-        <Link to="/wishlist">
+        <Link to="/wishlist" className="sm:hidden">
           <Heart className="h-4 w-4" />
         </Link>
         <div className="relative">
