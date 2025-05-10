@@ -23,7 +23,11 @@ const WishlistPage = () => {
   };
 
   const handle_remove_all = () => {
-    dispatch(remove_all_from_wishlist());
+    if (
+      window.confirm("Are you sure you want to remove all items from wishlist?")
+    ) {
+      dispatch(remove_all_from_wishlist());
+    }
   };
 
   const handle_add_to_cart = (item: any) => {

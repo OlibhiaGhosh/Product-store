@@ -3,8 +3,11 @@ import { addDetails } from "../redux/shippingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { remove_all } from "../redux/cartSlice";
 import { Link } from "react-router-dom";
+import { handle_is_removed_from_cart } from "@/redux/productSlice";
+import { CartItem } from "@/types";
 
 const CheckoutPage = () => {
+  const cart_items = useSelector((state: any) => state.cart.cart_products);
   const dispatch = useDispatch();
   const [orderplaced, isorderPlaced] = useState(false);
   const [orderDetails, setOrderDetails] = useState({
@@ -19,13 +22,16 @@ const CheckoutPage = () => {
     expiry: "",
     cvv: "",
   });
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (window.confirm("Are you sure you want to place the order?")) {
       const details = {
         ...orderDetails,
         id: Date.now().toString(),
       };
       dispatch(addDetails(details));
+      await cart_items.map((item: CartItem) => {
+        dispatch(handle_is_removed_from_cart(item));
+      });
       dispatch(remove_all());
       isorderPlaced(true);
     }
@@ -55,7 +61,25 @@ const CheckoutPage = () => {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
 
-          <form className="bg-white shadow-md rounded-lg p-6">
+          <form
+            className="bg-white shadow-md rounded-lg p-6"
+            onSubmit={(e) => {
+              // e.preventDefault();
+              // orderDetails.fullname != "" &&
+              // orderDetails.phoneno != "" &&
+              // orderDetails.email != "" &&
+              // orderDetails.address != "" &&
+              // orderDetails.state != "" &&
+              // orderDetails.pincode != "" &&
+              // orderDetails.cardname != "" &&
+              // orderDetails.cardno != "" &&
+              // orderDetails.cvv != "" &&
+              // orderDetails.expiry != ""
+              //   ? handleSubmit()
+              //   : alert("Please fill all the details");/
+              handleSubmit();
+            }}
+          >
             <div className="space-y-6">
               <div>
                 <label
@@ -244,21 +268,21 @@ const CheckoutPage = () => {
               <button
                 type="submit"
                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                onClick={(e) => {
-                  e.preventDefault();
-                  (orderDetails.fullname != "" &&
-                  orderDetails.phoneno != "" &&
-                  orderDetails.email != "" &&
-                  orderDetails.address != "" &&
-                  orderDetails.state != "" &&
-                  orderDetails.pincode != "" &&
-                  orderDetails.cardname != "" &&
-                  orderDetails.cardno != "" &&
-                  orderDetails.cvv != "" &&
-                  orderDetails.expiry != "")
-                    ? handleSubmit()
-                    : alert("Please fill all the details");
-                }}
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   (orderDetails.fullname != "" &&
+                //   orderDetails.phoneno != "" &&
+                //   orderDetails.email != "" &&
+                //   orderDetails.address != "" &&
+                //   orderDetails.state != "" &&
+                //   orderDetails.pincode != "" &&
+                //   orderDetails.cardname != "" &&
+                //   orderDetails.cardno != "" &&
+                //   orderDetails.cvv != "" &&
+                //   orderDetails.expiry != "")
+                //     ? handleSubmit()
+                //     : alert("Please fill all the details");
+                // }}
               >
                 Place Order
               </button>

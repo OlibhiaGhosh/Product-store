@@ -42,9 +42,7 @@ const wishlistSlice = createSlice({
       );
     },
     remove_all_from_wishlist: (state) => {
-      if (window.confirm("Are you sure you want to clear the wishlist?")) {
-        state.wishlist = [];
-      }
+      state.wishlist = [];
     },
   },
 });
